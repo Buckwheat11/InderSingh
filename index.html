@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inder Singh — Data Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #09090f;
+      --surface: #111118;
+      --surface-2: #18181f;
+      --surface-3: #1f1f28;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #f0f0f8;
+      --text-muted: #5a5a72;
+      --text-dim: #8888a8;
+      --accent: #c8a96e;
+      --accent-dim: rgba(200,169,110,0.12);
+      --accent-border: rgba(200,169,110,0.3);
+      --teal: #4ecdc4;
+      --teal-dim: rgba(78,205,196,0.1);
+      --red: #e05c5c;
+      --font: 'Inter', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* dot grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2.5rem;
+      height: 54px;
+      background: rgba(9, 9, 15, 0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* MAIN */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 54px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 .dim { color: var(--text-muted); font-weight: 300; }
+    h1 .accent { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-dim);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-family: var(--mono);
+      font-weight: 500;
+      padding: 9px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border-hover);
+      color: var(--text-dim);
+      background: var(--surface);
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+    }
+
+    .btn:hover { border-color: var(--border-hover); color: var(--text); background: var(--surface-2); }
+
+    .btn.accent {
+      background: var(--accent-dim);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+
+    .btn.accent:hover { background: rgba(200,169,110,0.2); }
+
+    /* STAT ROW */
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat { }
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* SECTION */
+    section { padding: 5rem 0 1rem; }
+
+    .section-tag {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-tag span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-tag::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* SKILLS */
+    .skills-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .skill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-dim);
+      transition: all 0.2s;
+    }
+
+    .skill:hover { border-color: var(--border-hover); color: var(--text); }
+
+    .skill.core {
+      border-color: var(--accent-border);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .skill-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: 7px;
+      vertical-align: middle;
+    }
+
+    /* PROJECT CARDS */
+    .project {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .project::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project:hover { border-color: var(--border-hover); }
+    .project:hover::before { opacity: 1; }
+
+    .project-screenshot {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-screenshot-placeholder {
+      width: 100%;
+      height: 210px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+
+    .screenshot-icon {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-hover);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-body { padding: 1.5rem; }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .project-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-pbi { background: rgba(242,142,28,0.12); color: #f28e1c; border: 1px solid rgba(242,142,28,0.25); }
+    .badge-excel { background: rgba(33,115,70,0.15); color: #3dba77; border: 1px solid rgba(33,115,70,0.25); }
+    .badge-nda { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-hover); }
+
+    .project-desc {
+      font-size: 13.5px;
+      color: var(--text-dim);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    /* technical bullets */
+    .tech-list {
+      list-style: none;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .tech-list li {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .tech-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: var(--surface-3);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      letter-spacing: 0.02em;
+    }
+
+    .project-links { display: flex; gap: 8px; }
+
+    /* OTHER WORK */
+    .other-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .other-item:hover { border-color: var(--border-hover); }
+
+    .other-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .other-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+    }
+
+    /* CONTACT */
+    .contact-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1rem;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent-border);
+      background: var(--accent-dim);
+    }
+
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .contact-value {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* DIVIDER */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0 0;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.04em;
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 640px) {
+      nav .nav-links { display: none; }
+      .contact-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-row { gap: 1.5rem; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">inder.singh</span>
+  <div class="nav-links">
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#other">other</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-eyebrow">Bachelor of Data Science — Swinburne University</p>
+    <h1>
+      Inder Singh.<br />
+      <span class="dim">Data </span><span class="accent">analyst</span><span class="dim"> in training.</span>
+    </h1>
+    <p class="hero-desc">
+      Building a portfolio in Power BI, Excel, and SQL. I care about clean data, honest analysis, and dashboards that actually answer a question.
+    </p>
+    <div class="hero-btns">
+      <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/inder-singh-ab7797377/" target="_blank" class="btn">LinkedIn ↗</a>
+      <a href="mailto:inderdsingh7@gmail.com" class="btn">Email</a>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <p class="stat-num">3</p>
+        <p class="stat-label">dashboard projects</p>
+      </div>
+      <div class="stat">
+        <p class="stat-num">2,879</p>
+        <p class="stat-label">AFL games analysed</p>
+      </div>
+      <div class="stat">
+        <p class="stat-num">14yr</p>
+        <p class="stat-label">ABS energy data</p>
+      </div>
+      <div class="stat">
+        <p class="stat-num">1</p>
+        <p class="stat-label">NDA client project</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal">
+    <div class="section-tag"><span>skills</span></div>
+    <div class="skills-wrap">
+      <div class="skill core"><span class="skill-dot"></span>Power BI</div>
+      <div class="skill core"><span class="skill-dot"></span>DAX</div>
+      <div class="skill core"><span class="skill-dot"></span>Power Query</div>
+      <div class="skill core"><span class="skill-dot"></span>Excel</div>
+      <div class="skill core"><span class="skill-dot"></span>SQL</div>
+      <div class="skill">Python</div>
+      <div class="skill">Figma</div>
+      <div class="skill">Data cleaning</div>
+      <div class="skill">Pivot tables</div>
+      <div class="skill">XLOOKUP</div>
+      <div class="skill">Data modelling</div>
+      <div class="skill">GitHub</div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal">
+    <div class="section-tag"><span>projects</span></div>
+
+    <!-- ABS -->
+    <div class="project">
+      <div class="project-screenshot-placeholder">
+        <!-- Replace with: <img class="project-screenshot" src="images/abs-dashboard.png" alt="ABS Energy Dashboard" /> -->
+        <div class="screenshot-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <span style="font-size:11px; font-family: var(--mono);">add abs-dashboard.png to /images</span>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3 class="project-title">Australian energy accounts dashboard</h3>
+          <span class="badge badge-pbi">Power BI</span>
+        </div>
+        <p class="project-desc">
+          Built an interactive Power BI dashboard on ABS energy data covering 7 industries and 9 energy products from 2010–2024, showing Australia's shift away from fossil fuels over 14 years.
+        </p>
+        <ul class="tech-list">
+          <li>Power Query: filtered totals, replaced nulls, unpivoted year columns, split delimiter, renamed products removing ABS footnote markers</li>
+          <li>DAX: Total Energy, % of Total Energy, Fossil Fuel Flag calculated column classifying products into fossil vs other</li>
+          <li>Slicers: Year, Product, Industry with cross-visual filtering</li>
+          <li>Stopped Year column summarisation in model view to prevent incorrect aggregation</li>
+        </ul>
+        <div class="project-tags">
+          <span class="tag">Power Query</span>
+          <span class="tag">DAX</span>
+          <span class="tag">ABS open data</span>
+          <span class="tag">Energy transition</span>
+          <span class="tag">Fossil fuel analysis</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
+          <a href="#" class="btn">View PDF ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RETAIL SALES -->
+    <div class="project reveal">
+      <div class="project-screenshot-placeholder">
+        <!-- Replace with: <img class="project-screenshot" src="images/sales-dashboard.png" alt="Retail Sales Dashboard" /> -->
+        <div class="screenshot-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <span style="font-size:11px; font-family: var(--mono);">add sales-dashboard.png to /images</span>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3 class="project-title">Retail store sales dashboard</h3>
+          <span class="badge badge-pbi">Power BI</span>
+        </div>
+        <p class="project-desc">
+          End-to-end project starting from a deliberately messy dataset. Heavy Power Query cleaning before building a sales and profitability dashboard with a proper date table for time intelligence.
+        </p>
+        <ul class="tech-list">
+          <li>Removed duplicate Transaction IDs after sorting by date descending</li>
+          <li>Capitalised category column, trimmed all columns, corrected data types</li>
+          <li>Built a cleaned Price Per Unit column handling nulls: if null and Total Spent and Quantity exist, compute Total Spent ÷ Quantity</li>
+          <li>Filtered out incomplete rows with null Quantity or Total Spent; replaced blanks with null in Item column</li>
+          <li>Built a Date Table using CALENDAR() DAX with Year, Month Number, Month Name columns; linked via many-to-one relationship; sorted Month Name by Month Number to fix x-axis ordering</li>
+        </ul>
+        <div class="project-tags">
+          <span class="tag">Data cleaning</span>
+          <span class="tag">Power Query</span>
+          <span class="tag">DAX</span>
+          <span class="tag">Date table</span>
+          <span class="tag">Time intelligence</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
+          <a href="#" class="btn">View PDF ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFL -->
+    <div class="project reveal">
+      <div class="project-screenshot-placeholder">
+        <!-- Replace with: <img class="project-screenshot" src="images/afl-dashboard.png" alt="AFL Dashboard" /> -->
+        <div class="screenshot-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <span style="font-size:11px; font-family: var(--mono);">add afl-dashboard.png to /images</span>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3 class="project-title">AFL games Excel dashboard</h3>
+          <span class="badge badge-excel">Excel</span>
+        </div>
+        <p class="project-desc">
+          Interactive Excel dashboard analysing 2,879 AFL games from 2012–2025 — attendance trends, team win rates, venue comparisons, and scoring patterns across 7 pivot tables with Year and Venue slicers.
+        </p>
+        <ul class="tech-list">
+          <li>Winner column: =IF(HomeScore&gt;AwayScore, HomeTeam, IF(HomeScore&lt;AwayScore, AwayTeam, "Draw")) — dynamic team name lookup</li>
+          <li>Attendance tier: =IF(J2&lt;30000,"Low", IF(J2&lt;50000,"Medium","High")) — feeds attendance category pivot</li>
+          <li>WinnerType column hardcoded "Home Team" / "Away Team" / "Draw" for home advantage analysis</li>
+          <li>Turned off GetPivotData to enable clean KPI card cell references using =TEXT(ref,"#,##")</li>
+          <li>Custom round sort order applied via Data → Sort → Custom List to fix alphabetical pivot ordering</li>
+        </ul>
+        <div class="project-tags">
+          <span class="tag">Pivot tables</span>
+          <span class="tag">XLOOKUP</span>
+          <span class="tag">IF formulas</span>
+          <span class="tag">KPI cards</span>
+          <span class="tag">Slicers</span>
+          <span class="tag">Conditional formatting</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALGO TRADE -->
+    <div class="project reveal">
+      <div class="project-body" style="padding-top: 1.5rem;">
+        <div class="project-header">
+          <h3 class="project-title">Algorithmic trading tool</h3>
+          <div style="display:flex; gap:6px;">
+            <span class="badge badge-nda">NDA</span>
+            <span class="badge badge-nda">Group project</span>
+          </div>
+        </div>
+        <p class="project-desc">
+          Capstone group project built for an external client at Swinburne University as part of my Bachelor of Data Science. Full codebase is under NDA. Details available on request during an interview.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Client work</span>
+          <span class="tag">Swinburne capstone</span>
+          <span class="tag">Group project</span>
+          <span class="tag">NDA</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr />
+
+  <!-- OTHER WORK -->
+  <section id="other" class="reveal">
+    <div class="section-tag"><span>other work</span></div>
+
+    <a href="https://github.com/Buckwheat11" target="_blank">
+      <div class="other-item">
+        <div>
+          <p class="other-title">SQL business questions</p>
+          <p class="other-sub">subqueries · CTEs · window functions · business-framed problems</p>
+        </div>
+        <span class="btn">GitHub ↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/Buckwheat11" target="_blank">
+      <div class="other-item">
+        <div>
+          <p class="other-title">Object oriented programming</p>
+          <p class="other-sub">University coursework — Swinburne ICT</p>
+        </div>
+        <span class="btn">GitHub ↗</span>
+      </div>
+    </a>
+
+  </section>
+
+  <hr />
+
+  <!-- CONTACT -->
+  <section id="contact" class="reveal" style="padding-bottom: 6rem;">
+    <div class="section-tag"><span>contact</span></div>
+    <div class="contact-row">
+      <a href="mailto:inderdsingh7@gmail.com">
+        <div class="contact-card">
+          <p class="contact-label">Email</p>
+          <p class="contact-value">inderdsingh7@gmail.com</p>
+        </div>
+      </a>
+      <a href="tel:0490482342">
+        <div class="contact-card">
+          <p class="contact-label">Phone</p>
+          <p class="contact-value">0490 482 342</p>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/inder-singh-ab7797377/" target="_blank">
+        <div class="contact-card">
+          <p class="contact-label">LinkedIn</p>
+          <p class="contact-value">inder-singh ↗</p>
+        </div>
+      </a>
+      <a href="https://github.com/Buckwheat11" target="_blank">
+        <div class="contact-card">
+          <p class="contact-label">GitHub</p>
+          <p class="contact-value">Buckwheat11 ↗</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  inder singh · bachelor of data science · swinburne university · <script>document.write(new Date().getFullYear())</script>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
