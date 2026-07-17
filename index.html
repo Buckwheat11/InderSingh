@@ -308,18 +308,18 @@
 
     .project-img-wrap .full-preview {
       display: none;
-      position: absolute;
-      top: 0;
+      position: fixed;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      width: 820px;
-      max-width: 90vw;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      width: 90vw;
+      max-width: 1200px;
       background: var(--surface);
       border: 1px solid var(--border-hover);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.85);
     }
 
     .project-img-wrap .full-preview img {
@@ -330,6 +330,16 @@
 
     .project-img-wrap:hover .full-preview {
       display: block;
+    }
+
+    /* dim background behind preview */
+    .project-img-wrap:hover::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 998;
+      pointer-events: none;
     }
 
     .project-screenshot-placeholder {
