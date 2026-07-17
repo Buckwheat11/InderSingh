@@ -100,7 +100,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-top: 54px;
+      padding-top: 86px;
     }
 
     .hero-eyebrow {
@@ -133,6 +133,35 @@
 
     h1 .dim { color: var(--text-muted); font-weight: 300; }
     h1 .accent { color: var(--accent); }
+
+    /* TOP CONTACT STRIP */
+    .contact-strip {
+      position: fixed;
+      top: 54px; left: 0; right: 0;
+      z-index: 99;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 2.5rem;
+      height: 32px;
+      background: rgba(9,9,15,0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-strip a {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .contact-strip a:hover { color: var(--accent); }
 
     .hero-desc {
       font-size: 15px;
@@ -171,29 +200,7 @@
 
     .btn.accent:hover { background: rgba(200,169,110,0.2); }
 
-    /* STAT ROW */
-    .stat-row {
-      display: flex;
-      gap: 2rem;
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
 
-    .stat { }
-    .stat-num {
-      font-family: var(--mono);
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-    }
 
     /* SECTION */
     section { padding: 5rem 0 1rem; }
@@ -512,6 +519,14 @@
   </div>
 </nav>
 
+<!-- TOP CONTACT STRIP -->
+<div class="contact-strip">
+  <a href="mailto:inderdsingh7@gmail.com">✉ inderdsingh7@gmail.com</a>
+  <a href="tel:0490482342">✆ 0490 482 342</a>
+  <a href="https://www.linkedin.com/in/inder-singh-ab7797377/" target="_blank">in/inder-singh ↗</a>
+  <a href="https://github.com/Buckwheat11" target="_blank">github/Buckwheat11 ↗</a>
+</div>
+
 <main>
 
   <!-- HERO -->
@@ -519,7 +534,7 @@
     <p class="hero-eyebrow">Bachelor of Data Science — Swinburne University</p>
     <h1>
       Inder Singh.<br />
-      <span class="dim">Data </span><span class="accent">analyst</span><span class="dim"> in training.</span>
+      <span class="dim">Junior </span><span class="accent">data analyst</span><span class="dim">.</span>
     </h1>
     <p class="hero-desc">
       Building a portfolio in Power BI, Excel, and SQL. I care about clean data, honest analysis, and dashboards that actually answer a question.
@@ -530,24 +545,7 @@
       <a href="mailto:inderdsingh7@gmail.com" class="btn">Email</a>
     </div>
 
-    <div class="stat-row">
-      <div class="stat">
-        <p class="stat-num">3</p>
-        <p class="stat-label">dashboard projects</p>
-      </div>
-      <div class="stat">
-        <p class="stat-num">2,879</p>
-        <p class="stat-label">AFL games analysed</p>
-      </div>
-      <div class="stat">
-        <p class="stat-num">14yr</p>
-        <p class="stat-label">ABS energy data</p>
-      </div>
-      <div class="stat">
-        <p class="stat-num">1</p>
-        <p class="stat-label">NDA client project</p>
-      </div>
-    </div>
+
   </section>
 
   <!-- SKILLS -->
@@ -558,14 +556,22 @@
       <div class="skill core"><span class="skill-dot"></span>DAX</div>
       <div class="skill core"><span class="skill-dot"></span>Power Query</div>
       <div class="skill core"><span class="skill-dot"></span>Excel</div>
-      <div class="skill core"><span class="skill-dot"></span>SQL</div>
+      <div class="skill core"><span class="skill-dot"></span>SQL / MySQL</div>
+      <div class="skill core"><span class="skill-dot"></span>Tableau</div>
       <div class="skill">Python</div>
+      <div class="skill">Pandas</div>
+      <div class="skill">Scikit-learn</div>
+      <div class="skill">R / RStudio</div>
+      <div class="skill">Microsoft Azure</div>
+      <div class="skill">AWS</div>
       <div class="skill">Figma</div>
       <div class="skill">Data cleaning</div>
       <div class="skill">Pivot tables</div>
       <div class="skill">XLOOKUP</div>
       <div class="skill">Data modelling</div>
       <div class="skill">GitHub</div>
+      <div class="skill">Jupyter Notebook</div>
+      <div class="skill">Kanban</div>
     </div>
   </section>
 
