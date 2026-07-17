@@ -145,23 +145,24 @@
       gap: 1.5rem;
       padding: 0 2.5rem;
       height: 32px;
-      background: rgba(9,9,15,0.7);
+      background: rgba(9,9,15,0.9);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(200,169,110,0.25);
     }
 
     .contact-strip a {
       font-family: var(--mono);
       font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-      transition: color 0.2s;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      opacity: 0.85;
+      transition: opacity 0.2s;
       display: flex;
       align-items: center;
       gap: 5px;
     }
 
-    .contact-strip a:hover { color: var(--accent); }
+    .contact-strip a:hover { opacity: 1; }
 
     .hero-desc {
       font-size: 15px;
@@ -292,9 +293,43 @@
       width: 100%;
       height: 210px;
       object-fit: cover;
+      object-position: top;
       display: block;
       background: var(--surface-2);
       border-bottom: 1px solid var(--border);
+      cursor: zoom-in;
+    }
+
+    /* full image overlay on hover */
+    .project-img-wrap {
+      position: relative;
+      overflow: visible;
+    }
+
+    .project-img-wrap .full-preview {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      width: 820px;
+      max-width: 90vw;
+      background: var(--surface);
+      border: 1px solid var(--border-hover);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+    }
+
+    .project-img-wrap .full-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .project-img-wrap:hover .full-preview {
+      display: block;
     }
 
     .project-screenshot-placeholder {
@@ -583,20 +618,24 @@
 
     <!-- ABS -->
     <div class="project">
-      <img class="project-screenshot" src="images/absdashboard.PNG" alt="ABS Energy Dashboard" />
+      <div class="project-img-wrap">
+        <img class="project-screenshot" src="images/absdashboard.PNG" alt="ABS Energy Dashboard" />
+        <div class="full-preview"><img src="images/absdashboard.PNG" alt="ABS Energy Dashboard Full" /></div>
+      </div>
       <div class="project-body">
         <div class="project-header">
           <h3 class="project-title">Australian energy accounts dashboard</h3>
           <span class="badge badge-pbi">Power BI</span>
         </div>
         <p class="project-desc">
-          Built an interactive Power BI dashboard on ABS energy data covering 7 industries and 9 energy products from 2010–2024, showing Australia's shift away from fossil fuels over 14 years.
+          How is Australia's energy consumption distributed — and is the country actually transitioning away from fossil fuels? Built on ABS data covering 7 industries and 9 energy products from 2010–2023.
         </p>
         <ul class="tech-list">
-          <li>Power Query: filtered totals, replaced nulls, unpivoted year columns, split delimiter, renamed products removing ABS footnote markers</li>
-          <li>DAX: Total Energy, % of Total Energy, Fossil Fuel Flag calculated column classifying products into fossil vs other</li>
-          <li>Slicers: Year, Product, Industry with cross-visual filtering</li>
-          <li>Stopped Year column summarisation in model view to prevent incorrect aggregation</li>
+          <li>Key finding: fossil fuels still account for 57.11% of total energy — Natural gas alone at 57,668 PJ dominates all other products</li>
+          <li>Mining is the largest consuming industry at 51,705 PJ (40.92%), followed by Electricity/gas/water at 29,890 PJ (23.66%)</li>
+          <li>Fossil fuel average usage has declined from ~400 PJ/year in 2010 toward ~270 PJ by 2023 — non-fossil sources rising over same period</li>
+          <li>Power Query: unpivoted 14 year columns, replaced ABS suppressed values (np → null), removed footnote markers from product names, split year delimiter</li>
+          <li>DAX: Fossil Fuel Flag calculated column, % of Total Energy measure, Top Industry and Top Product cards</li>
         </ul>
         <div class="project-tags">
           <span class="tag">Power Query</span>
@@ -604,6 +643,7 @@
           <span class="tag">ABS open data</span>
           <span class="tag">Energy transition</span>
           <span class="tag">Fossil fuel analysis</span>
+          <span class="tag">126,346 PJ analysed</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
@@ -614,21 +654,25 @@
 
     <!-- RETAIL SALES -->
     <div class="project reveal">
-      <img class="project-screenshot" src="images/salesdashboard.PNG" alt="Retail Sales Dashboard" />
+      <div class="project-img-wrap">
+        <img class="project-screenshot" src="images/salesdashboard.PNG" alt="Retail Sales Dashboard" />
+        <div class="full-preview"><img src="images/salesdashboard.PNG" alt="Retail Sales Dashboard Full" /></div>
+      </div>
       <div class="project-body">
         <div class="project-header">
           <h3 class="project-title">Retail store sales dashboard</h3>
           <span class="badge badge-pbi">Power BI</span>
         </div>
         <p class="project-desc">
-          End-to-end project starting from a deliberately messy dataset. Heavy Power Query cleaning before building a sales and profitability dashboard with a proper date table for time intelligence.
+          Which product categories drive the most revenue, and how does performance vary across months and payment methods? Built end-to-end from a deliberately messy raw dataset requiring significant cleaning before analysis.
         </p>
         <ul class="tech-list">
-          <li>Removed duplicate Transaction IDs after sorting by date descending</li>
-          <li>Capitalised category column, trimmed all columns, corrected data types</li>
-          <li>Built a cleaned Price Per Unit column handling nulls: if null and Total Spent and Quantity exist, compute Total Spent ÷ Quantity</li>
-          <li>Filtered out incomplete rows with null Quantity or Total Spent; replaced blanks with null in Item column</li>
-          <li>Built a Date Table using CALENDAR() DAX with Year, Month Number, Month Name columns; linked via many-to-one relationship; sorted Month Name by Month Number to fix x-axis ordering</li>
+          <li>KPIs: $1,552,071 total revenue · 11,971 transactions · 66,276 units sold · $129.65 avg order value</li>
+          <li>Top category by revenue: Butchers ($208K), closely followed by Electric Household Essentials ($204K) and Beverages ($197K)</li>
+          <li>Payment method split nearly even: Cash 34.27%, Digital Wallet 32.92%, Credit Card 32.80%</li>
+          <li>Revenue peaks in January ($160K) then dips significantly through mid-year — seasonal pattern visible on monthly trend line</li>
+          <li>Power Query cleaning: removed duplicate Transaction IDs, built derived Price Per Unit column for nulls using Total Spent ÷ Quantity, capitalised categories, trimmed all columns, filtered incomplete rows</li>
+          <li>Date Table via CALENDAR() DAX with Month Name sorted by Month Number to fix x-axis ordering</li>
         </ul>
         <div class="project-tags">
           <span class="tag">Data cleaning</span>
@@ -636,6 +680,7 @@
           <span class="tag">DAX</span>
           <span class="tag">Date table</span>
           <span class="tag">Time intelligence</span>
+          <span class="tag">$1.55M revenue analysed</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
@@ -646,29 +691,33 @@
 
     <!-- AFL -->
     <div class="project reveal">
-      <img class="project-screenshot" src="images/AFLdashboard.PNG" alt="AFL Games Dashboard" />
+      <div class="project-img-wrap">
+        <img class="project-screenshot" src="images/AFLdashboard.PNG" alt="AFL Games Dashboard" />
+        <div class="full-preview"><img src="images/AFLdashboard.PNG" alt="AFL Games Dashboard Full" /></div>
+      </div>
       <div class="project-body">
         <div class="project-header">
           <h3 class="project-title">AFL games Excel dashboard</h3>
           <span class="badge badge-excel">Excel</span>
         </div>
         <p class="project-desc">
-          Interactive Excel dashboard analysing 2,879 AFL games from 2012–2025 — attendance trends, team win rates, venue comparisons, and scoring patterns across 7 pivot tables with Year and Venue slicers.
+          Which teams win the most, which venues draw the biggest crowds, and how did COVID-19 impact AFL attendance? Analysed 2,879 games across 2012–2025 using Excel pivot tables, formulas, and slicers.
         </p>
         <ul class="tech-list">
-          <li>Winner column: =IF(HomeScore&gt;AwayScore, HomeTeam, IF(HomeScore&lt;AwayScore, AwayTeam, "Draw")) — dynamic team name lookup</li>
-          <li>Attendance tier: =IF(J2&lt;30000,"Low", IF(J2&lt;50000,"Medium","High")) — feeds attendance category pivot</li>
-          <li>WinnerType column hardcoded "Home Team" / "Away Team" / "Draw" for home advantage analysis</li>
-          <li>Turned off GetPivotData to enable clean KPI card cell references using =TEXT(ref,"#,##")</li>
-          <li>Custom round sort order applied via Data → Sort → Custom List to fix alphabetical pivot ordering</li>
+          <li>KPIs: 2,879 total games · 32,430 average attendance · 100,024 highest recorded attendance</li>
+          <li>MCG is the dominant venue at 52,661 avg attendance — nearly 25% higher than the next largest (Perth Stadium at 41,297)</li>
+          <li>COVID-19 impact clearly visible: attendance collapsed from 36,317 in 2019 to 6,377 in 2020, recovering to 38,227 by 2025</li>
+          <li>Geelong leads all-time wins (223), ahead of Sydney (207) and Hawthorn (192) — Grand Final rounds spike attendance to ~90,000+</li>
+          <li>Winner column via nested IF pulling dynamic team names; Attendance tier (Low/Med/High) via nested IF on 30K/50K thresholds</li>
+          <li>Custom round sort order applied to fix alphabetical pivot ordering; GetPivotData disabled for clean KPI card references</li>
         </ul>
         <div class="project-tags">
           <span class="tag">Pivot tables</span>
-          <span class="tag">XLOOKUP</span>
-          <span class="tag">IF formulas</span>
+          <span class="tag">Nested IF</span>
           <span class="tag">KPI cards</span>
           <span class="tag">Slicers</span>
           <span class="tag">Conditional formatting</span>
+          <span class="tag">2,879 games analysed</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/Buckwheat11" target="_blank" class="btn accent">GitHub ↗</a>
@@ -680,20 +729,32 @@
     <div class="project reveal">
       <div class="project-body" style="padding-top: 1.5rem;">
         <div class="project-header">
-          <h3 class="project-title">Algorithmic trading tool</h3>
-          <div style="display:flex; gap:6px;">
+          <h3 class="project-title">AlgoTrade — algorithmic trading tool</h3>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <span class="badge badge-nda">NDA</span>
-            <span class="badge badge-nda">Group project</span>
+            <span class="badge badge-nda">Group · 5 members</span>
+            <span class="badge badge-nda">1 year</span>
           </div>
         </div>
         <p class="project-desc">
-          Capstone group project built for an external client at Swinburne University as part of my Bachelor of Data Science. Full codebase is under NDA. Details available on request during an interview.
+          Year-long capstone project built for an external client (Identity Umbrella) at Swinburne University. An end-to-end intelligent trading platform that automates the full trading lifecycle — from natural language strategy creation through to live execution, backtesting, and performance analysis.
         </p>
+        <ul class="tech-list">
+          <li>My role 1: built the AI agent chatbot — converts natural language trading strategy prompts into executable strategies using OpenAI API integration</li>
+          <li>My role 2: social sentiment analysis module — analyses supplied text and news to measure market sentiment and assist strategy decision making</li>
+          <li>Platform features: strategy backtesting on real historical data, live and paper trading via Binance and Alpaca integrations, Telegram notification system for instant trade alerts</li>
+          <li>Stack: Python, OpenAI, Flask, MongoDB, Yahoo Finance, Binance API, Alpaca API, Telegram API</li>
+          <li>Full codebase under NDA — available to discuss in detail during an interview</li>
+        </ul>
         <div class="project-tags">
-          <span class="tag">Client work</span>
+          <span class="tag">Python</span>
+          <span class="tag">OpenAI</span>
+          <span class="tag">Flask</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Sentiment analysis</span>
+          <span class="tag">AI agent</span>
+          <span class="tag">Binance API</span>
           <span class="tag">Swinburne capstone</span>
-          <span class="tag">Group project</span>
-          <span class="tag">NDA</span>
         </div>
       </div>
     </div>
