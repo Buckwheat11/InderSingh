@@ -447,6 +447,66 @@
 
     .project-links { display: flex; gap: 8px; }
 
+    /* ALGOTRADE SUB-SECTIONS */
+    .algo-subsection {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .algo-subsection:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .algo-subsection-label {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .algo-subsection-label::before {
+      content: '→';
+    }
+
+    .algo-shot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .algo-shot {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: zoom-in;
+      transition: border-color 0.2s;
+    }
+
+    .algo-shot:hover { border-color: var(--accent-border); }
+
+    .algo-caption {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 640px) {
+      .algo-shot-grid { grid-template-columns: 1fr; }
+    }
+
     /* OTHER WORK */
     .other-item {
       display: flex;
@@ -626,8 +686,71 @@
   <section id="projects" class="reveal">
     <div class="section-tag"><span>projects</span></div>
 
-    <!-- ABS -->
+    <!-- ALGO TRADE -->
     <div class="project">
+      <div class="project-body" style="padding-top: 1.5rem;">
+        <div class="project-header">
+          <h3 class="project-title">AlgoTrade — algorithmic trading tool</h3>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <span class="badge badge-nda">NDA</span>
+            <span class="badge badge-nda">Group · 5 members</span>
+            <span class="badge badge-nda">1 year</span>
+          </div>
+        </div>
+        <p class="project-desc">
+          Year-long capstone project built for an external client (Identity Umbrella) at Swinburne University. An end-to-end intelligent trading platform that automates the full trading lifecycle — from natural language strategy creation through to live execution, backtesting, and performance analysis. Codebase is under NDA; the screenshots below are from the live platform.
+        </p>
+
+        <div class="algo-subsection">
+          <p class="algo-subsection-label">AI Chatbot — Natural Language Strategy Agent</p>
+          <div class="algo-shot-grid">
+            <div class="project-img-wrap">
+              <img class="algo-shot" src="images/algotrade-chatbot-1.png" alt="AlgoTrade AI Chatbot quick actions menu" />
+              <div class="full-preview"><img src="images/algotrade-chatbot-1.png" alt="AlgoTrade AI Chatbot quick actions menu full" /></div>
+            </div>
+            <div class="project-img-wrap">
+              <img class="algo-shot" src="images/algotrade-chatbot-2.png" alt="AlgoTrade AI Chatbot executing a natural language command" />
+              <div class="full-preview"><img src="images/algotrade-chatbot-2.png" alt="AlgoTrade AI Chatbot executing a natural language command full" /></div>
+            </div>
+          </div>
+          <p class="algo-caption">Built the AI agent backend using OpenAI's API. A plain-English command like "update strategy named Breakout to Breakout Pro" is parsed and executed directly, no manual form-filling, with pre-built Quick Actions for common tasks like creating, editing and backtesting strategies.</p>
+        </div>
+
+        <div class="algo-subsection">
+          <p class="algo-subsection-label">Social Sentiment Analyzer</p>
+          <div class="algo-shot-grid">
+            <div class="project-img-wrap">
+              <img class="algo-shot" src="images/algotrade-sentiment-1.png" alt="Social Sentiment Analyzer positive result" />
+              <div class="full-preview"><img src="images/algotrade-sentiment-1.png" alt="Social Sentiment Analyzer positive result full" /></div>
+            </div>
+            <div class="project-img-wrap">
+              <img class="algo-shot" src="images/algotrade-sentiment-2.png" alt="Social Sentiment Analyzer negative result" />
+              <div class="full-preview"><img src="images/algotrade-sentiment-2.png" alt="Social Sentiment Analyzer negative result full" /></div>
+            </div>
+          </div>
+          <p class="algo-caption">Scores pasted tweets or text for sentiment in real time, positive and negative signals shown with a confidence score, feeding directly into the platform's trading decision logic.</p>
+        </div>
+
+        <ul class="tech-list">
+          <li>Platform features: strategy backtesting on real historical data, live and paper trading via Binance and Alpaca integrations, Telegram notification system for instant trade alerts</li>
+          <li>Stack: Python, OpenAI, Flask, MongoDB, Yahoo Finance, Binance API, Alpaca API, Telegram API</li>
+          <li>Full codebase under NDA — available to discuss in detail during an interview</li>
+        </ul>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">OpenAI</span>
+          <span class="tag">Flask</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Sentiment analysis</span>
+          <span class="tag">AI agent</span>
+          <span class="tag">Binance API</span>
+          <span class="tag">Swinburne capstone</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABS -->
+    <div class="project reveal">
       <div class="project-img-wrap">
         <img class="project-screenshot" src="images/absdashboard.PNG" alt="ABS Energy Dashboard" />
         <div class="full-preview"><img src="images/absdashboard.PNG" alt="ABS Energy Dashboard Full" /></div>
@@ -735,39 +858,7 @@
       </div>
     </div>
 
-    <!-- ALGO TRADE -->
-    <div class="project reveal">
-      <div class="project-body" style="padding-top: 1.5rem;">
-        <div class="project-header">
-          <h3 class="project-title">AlgoTrade — algorithmic trading tool</h3>
-          <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <span class="badge badge-nda">NDA</span>
-            <span class="badge badge-nda">Group · 5 members</span>
-            <span class="badge badge-nda">1 year</span>
-          </div>
-        </div>
-        <p class="project-desc">
-          Year-long capstone project built for an external client (Identity Umbrella) at Swinburne University. An end-to-end intelligent trading platform that automates the full trading lifecycle — from natural language strategy creation through to live execution, backtesting, and performance analysis.
-        </p>
-        <ul class="tech-list">
-          <li>My role 1: built the AI agent chatbot — converts natural language trading strategy prompts into executable strategies using OpenAI API integration</li>
-          <li>My role 2: social sentiment analysis module — analyses supplied text and news to measure market sentiment and assist strategy decision making</li>
-          <li>Platform features: strategy backtesting on real historical data, live and paper trading via Binance and Alpaca integrations, Telegram notification system for instant trade alerts</li>
-          <li>Stack: Python, OpenAI, Flask, MongoDB, Yahoo Finance, Binance API, Alpaca API, Telegram API</li>
-          <li>Full codebase under NDA — available to discuss in detail during an interview</li>
-        </ul>
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">OpenAI</span>
-          <span class="tag">Flask</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">Sentiment analysis</span>
-          <span class="tag">AI agent</span>
-          <span class="tag">Binance API</span>
-          <span class="tag">Swinburne capstone</span>
-        </div>
-      </div>
-    </div>
+
 
   </section>
 
